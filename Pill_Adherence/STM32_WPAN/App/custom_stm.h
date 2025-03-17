@@ -34,17 +34,19 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 typedef enum
 {
-  /* MY_CUSTOM_SERVICE */
-  CUSTOM_STM_MY_CHAR_CHANGETHIS,
-  /* Service_Test_2 */
-  CUSTOM_STM_TEST_2_CHAR,
+  /* PILL_STATUS */
+  CUSTOM_STM_TIME_STAMP,
+  CUSTOM_STM_PILL_1,
 } Custom_STM_Char_Opcode_t;
 
 typedef enum
 {
-  /* MY_CHAR_changethis */
-  CUSTOM_STM_MY_CHAR_CHANGETHIS_READ_EVT,
-  /* TEST_2_CHAR */
+  /* time_stamp */
+  CUSTOM_STM_TIME_STAMP_READ_EVT,
+  CUSTOM_STM_TIME_STAMP_WRITE_EVT,
+  /* PILL_1 */
+  CUSTOM_STM_PILL_1_READ_EVT,
+  CUSTOM_STM_PILL_1_WRITE_EVT,
   CUSTOM_STM_NOTIFICATION_COMPLETE_EVT,
 
   CUSTOM_STM_BOOT_REQUEST_EVT
@@ -70,8 +72,8 @@ typedef struct
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-extern uint16_t SizeMy_Char_Changethis;
-extern uint16_t SizeTest_2_Char;
+extern uint16_t SizeTime_Stamp;
+extern uint16_t SizePill_1;
 
 /* USER CODE BEGIN EC */
 

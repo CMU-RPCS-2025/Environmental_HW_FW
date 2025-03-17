@@ -35,8 +35,7 @@
 /* Private typedef -----------------------------------------------------------*/
 typedef struct
 {
-  /* MY_CUSTOM_SERVICE */
-  /* Service_Test_2 */
+  /* PILL_STATUS */
   /* USER CODE BEGIN CUSTOM_APP_Context_t */
 
   /* USER CODE END CUSTOM_APP_Context_t */
@@ -77,8 +76,7 @@ uint16_t Connection_Handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-/* MY_CUSTOM_SERVICE */
-/* Service_Test_2 */
+/* PILL_STATUS */
 
 /* USER CODE BEGIN PFP */
 
@@ -96,14 +94,31 @@ void Custom_STM_App_Notification(Custom_STM_App_Notification_evt_t *pNotificatio
 
     /* USER CODE END CUSTOM_STM_App_Notification_Custom_Evt_Opcode */
 
-    /* MY_CUSTOM_SERVICE */
-    case CUSTOM_STM_MY_CHAR_CHANGETHIS_READ_EVT:
-      /* USER CODE BEGIN CUSTOM_STM_MY_CHAR_CHANGETHIS_READ_EVT */
+    /* PILL_STATUS */
+    case CUSTOM_STM_TIME_STAMP_READ_EVT:
+      /* USER CODE BEGIN CUSTOM_STM_TIME_STAMP_READ_EVT */
 
-      /* USER CODE END CUSTOM_STM_MY_CHAR_CHANGETHIS_READ_EVT */
+      /* USER CODE END CUSTOM_STM_TIME_STAMP_READ_EVT */
       break;
 
-    /* Service_Test_2 */
+    case CUSTOM_STM_TIME_STAMP_WRITE_EVT:
+      /* USER CODE BEGIN CUSTOM_STM_TIME_STAMP_WRITE_EVT */
+
+      /* USER CODE END CUSTOM_STM_TIME_STAMP_WRITE_EVT */
+      break;
+
+    case CUSTOM_STM_PILL_1_READ_EVT:
+      /* USER CODE BEGIN CUSTOM_STM_PILL_1_READ_EVT */
+
+      /* USER CODE END CUSTOM_STM_PILL_1_READ_EVT */
+      break;
+
+    case CUSTOM_STM_PILL_1_WRITE_EVT:
+      /* USER CODE BEGIN CUSTOM_STM_PILL_1_WRITE_EVT */
+
+      /* USER CODE END CUSTOM_STM_PILL_1_WRITE_EVT */
+      break;
+
     case CUSTOM_STM_NOTIFICATION_COMPLETE_EVT:
       /* USER CODE BEGIN CUSTOM_STM_NOTIFICATION_COMPLETE_EVT */
 
@@ -177,8 +192,7 @@ void Custom_APP_Init(void)
  *
  *************************************************************/
 
-/* MY_CUSTOM_SERVICE */
-/* Service_Test_2 */
+/* PILL_STATUS */
 
 /* USER CODE BEGIN FD_LOCAL_FUNCTIONS*/
 
