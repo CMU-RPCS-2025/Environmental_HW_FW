@@ -14,7 +14,7 @@ This code is meant to be run on a Raspberry Pi Pico 2W running CircuitPython fir
 - A0 to GP26
 Notice the code has a value for temperature and humidity. Those are placeholder values that help correct the C02 levels. they will be upated with actual values once we set up the Enviro+.
 
-## Other Infor
+## Other Info
 - code.py has the code to read from the PMSA003I
 - CO2code.py has code to read from the MQ-135
 - all libraries are available online except the MQ135cpy.py lib which is my edit of the micropython library for the mq135
