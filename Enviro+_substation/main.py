@@ -199,7 +199,7 @@ try:
             data = gas.read_all()
             data = data.nh3 / 1000
             display_text(variables[mode], data, unit)
-
+        
         if mode == 7:
             # variable = "pm1"
             unit = "ug/m3"
