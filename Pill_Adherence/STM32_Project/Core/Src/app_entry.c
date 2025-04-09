@@ -127,7 +127,6 @@ void MX_APPE_Init(void)
    * This system event is received with APPE_SysUserEvtRx()
    */
 /* USER CODE BEGIN APPE_Init_2 */
-
 /* USER CODE END APPE_Init_2 */
 
    return;

@@ -72,7 +72,9 @@ uint8_t UpdateCharData[512];
 uint8_t NotifyCharData[512];
 uint16_t Connection_Handle;
 /* USER CODE BEGIN PV */
-
+uint32_t timestamp = 12345;
+uint8_t  pill_1    = 4;
+//extern volatile uint8_t raw;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -177,7 +179,8 @@ void Custom_APP_Notification(Custom_App_ConnHandle_Not_evt_t *pNotification)
 void Custom_APP_Init(void)
 {
   /* USER CODE BEGIN CUSTOM_APP_Init */
-
+	 Custom_STM_App_Update_Char(CUSTOM_STM_TIME_STAMP, (uint8_t*)&timestamp);
+	 Custom_STM_App_Update_Char(CUSTOM_STM_PILL_1, (uint8_t*)&pill_1);
   /* USER CODE END CUSTOM_APP_Init */
   return;
 }

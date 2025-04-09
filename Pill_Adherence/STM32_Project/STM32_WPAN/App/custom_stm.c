@@ -39,6 +39,7 @@ typedef struct{
 
 extern uint16_t Connection_Handle;
 /* USER CODE BEGIN PTD */
+extern volatile uint8_t raw;
 
 /* USER CODE END PTD */
 
@@ -65,7 +66,7 @@ extern uint16_t Connection_Handle;
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-uint16_t SizeTime_Stamp = 1;
+uint16_t SizeTime_Stamp = 4;
 uint16_t SizePill_1 = 1;
 
 /**
@@ -180,9 +181,7 @@ static SVCCTL_EvtAckStatus_t Custom_STM_Event_Handler(void *Event)
             aci_gatt_allow_read(read_req->Connection_Handle);
             /*USER CODE BEGIN CUSTOM_STM_Service_1_Char_1_ACI_GATT_READ_PERMIT_REQ_VSEVT_CODE_2 */
 
-//            aci_gatt_update_char_value
-            uint8_t my_value = 42;
-            Custom_STM_App_Update_Char(CUSTOM_STM_TIME_STAMP, &my_value);
+            Custom_STM_App_Update_Char(CUSTOM_STM_PILL_1, &raw);
 
             /*USER CODE END CUSTOM_STM_Service_1_Char_1_ACI_GATT_READ_PERMIT_REQ_VSEVT_CODE_2*/
           } /* if (read_req->Attribute_Handle == (CustomContext.CustomTime_StampHdle + CHARACTERISTIC_VALUE_ATTRIBUTE_OFFSET))*/
@@ -195,8 +194,7 @@ static SVCCTL_EvtAckStatus_t Custom_STM_Event_Handler(void *Event)
             aci_gatt_allow_read(read_req->Connection_Handle);
             /*USER CODE BEGIN CUSTOM_STM_Service_1_Char_2_ACI_GATT_READ_PERMIT_REQ_VSEVT_CODE_2 */
 
-            uint8_t my_value = 43;
-            Custom_STM_App_Update_Char(CUSTOM_STM_PILL_1, &my_value);
+            Custom_STM_App_Update_Char(CUSTOM_STM_PILL_1, &raw);
 
             /*USER CODE END CUSTOM_STM_Service_1_Char_2_ACI_GATT_READ_PERMIT_REQ_VSEVT_CODE_2*/
           } /* if (read_req->Attribute_Handle == (CustomContext.CustomPill_1Hdle + CHARACTERISTIC_VALUE_ATTRIBUTE_OFFSET))*/
