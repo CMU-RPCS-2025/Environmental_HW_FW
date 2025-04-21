@@ -1,79 +1,202 @@
-# Enviro+
+# Enviro+ Python Example
 
-Designed for environmental monitoring, Enviro+ lets you measure air quality (pollutant gases and particulates), temperature, pressure, humidity, light, and noise level. Learn more - https://shop.pimoroni.com/products/enviro-plus
+This project demonstrates how to use the Enviro+ breakout board with a Raspberry Pi Zero to display and log environmental data, including temperature, pressure, humidity, light, gas levels, and noise.
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/pimoroni/enviroplus-python/test.yml?branch=main)](https://github.com/pimoroni/enviroplus-python/actions/workflows/test.yml)
-[![Coverage Status](https://coveralls.io/repos/github/pimoroni/enviroplus-python/badge.svg?branch=main)](https://coveralls.io/github/pimoroni/enviroplus-python?branch=main)
-[![PyPi Package](https://img.shields.io/pypi/v/enviroplus.svg)](https://pypi.python.org/pypi/enviroplus)
-[![Python Versions](https://img.shields.io/pypi/pyversions/enviroplus.svg)](https://pypi.python.org/pypi/enviroplus)
+I started with the code from Pimoroni. These are my sources:
+- https://github.com/pimoroni/enviroplus-python/tree/main
+- https://learn.pimoroni.com/article/getting-started-with-enviro-plus
 
-# Installing
+## Setup Instructions
 
-**Note** The code in this repository supports both the Enviro+ and Enviro Mini boards. _The Enviro Mini board does not have the Gas sensor or the breakout for the PM sensor._
+### 1. Setting Up the Virtual Environment
+1. **Install Python and Virtual Environment Tools**:
+   ```bash
+   sudo apt update
+   sudo apt install -y python3 python3-venv python3-pip
+   ```
 
-![Enviro Plus pHAT](https://raw.githubusercontent.com/pimoroni/enviroplus-python/main/Enviro-Plus-pHAT.jpg)
-![Enviro Mini pHAT](https://raw.githubusercontent.com/pimoroni/enviroplus-python/main/Enviro-mini-pHAT.jpg)
+2. **Create a Virtual Environment**:
+   ```bash
+   python3 -m venv ~/enviroplus-python/myenv
+   ```
 
-:warning: This library now supports Python 3 only, Python 2 is EOL - https://www.python.org/doc/sunset-python-2/
+3. **Activate the Virtual Environment**:
+   ```bash
+   source ~/enviroplus-python/myenv/bin/activate
+   ```
 
-## Install and configure dependencies from GitHub:
+4. **Install Required Python Packages**:
+   Inside the virtual environment, install the necessary dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   If you don’t have a `requirements.txt` file, install the following packages manually:
+   ```bash
+   pip install enviroplus st7735 pillow ltr559
+   ```
 
-* `git clone https://github.com/pimoroni/enviroplus-python`
-* `cd enviroplus-python`
-* `./install.sh`
+5. **Deactivate the Virtual Environment**:
+   After installing the dependencies, deactivate the virtual environment:
+   ```bash
+   deactivate
+   ```
 
-**Note** Libraries will be installed in the "pimoroni" virtual environment, you will need to activate it to run examples:
+---
 
+### 2. Running the Script
+1. **Activate the Virtual Environment**:
+   ```bash
+   source ~/enviroplus-python/myenv/bin/activate
+   ```
+
+2. **Run the Script**:
+   ```bash
+   python ~/enviroplus-python/examples/main.py
+   ```
+
+---
+
+### 3. Setting up Auto-Run on Startup
+
+To automatically run the `main.py` script whenever the Raspberry Pi is powered on:
+
+1. **Create a Shell Script**:
+   Create a shell script to activate the virtual environment and run the script:
+   ```bash
+   nano ~/enviroplus-python/examples/start_main.sh
+   ```
+   Add the following content:
+   ```bash
+   #!/bin/bash
+   cd /home/rpi/enviroplus-python/examples
+   source /home/rpi/enviroplus-python/myenv/bin/activate
+   python main.py
+   ```
+   Save the file and make it executable:
+   ```bash
+   chmod +x ~/enviroplus-python/examples/start_main.sh
+   ```
+
+2. **Create a Systemd Service**:
+   Create a systemd service to run the shell script on startup:
+   ```bash
+   sudo nano /etc/systemd/system/main.service
+   ```
+   Add the following content:
+   ```ini
+   [Unit]
+   Description=Run main.py on startup
+   After=network.target
+
+   [Service]
+   ExecStart=/home/rpi/enviroplus-python/examples/start_main.sh
+   WorkingDirectory=/home/rpi/enviroplus-python/examples
+   StandardOutput=inherit
+   StandardError=inherit
+   Restart=always
+   User=rpi
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   Save the file and reload the system daemon:
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+3. **Enable and Start the Service**:
+   Enable the service to run on startup:
+   ```bash
+   sudo systemctl enable main.service
+   ```
+   Start the service immediately:
+   ```bash
+   sudo systemctl start main.service
+   ```
+
+4. **Verify the Service**:
+   Check the status of the service:
+   ```bash
+   sudo systemctl status main.service
+   ```
+
+5. **Reboot to Test**:
+   Reboot the Raspberry Pi to confirm the script runs automatically:
+   ```bash
+   sudo reboot
+   ```
+
+---
+
+### 4. Troubleshooting
+- **Permission Denied for `air_conditions.json`**:
+  Ensure the script has write permissions for the directory:
+  ```bash
+  sudo chmod -R 775 ~/enviroplus-python/examples
+  sudo chown -R rpi:rpi ~/enviroplus-python/examples
+  ```
+
+- **Check Logs**:
+  If the script fails to run, check the logs for the service:
+  ```bash
+  journalctl -u main.service
+  ```
+
+---
+
+### 5. Hardware Config
+
+- Connect the Enviro+ breakout board to the Raspberry Pi Zero using the GPIO pins.
+
+- Ensure the I2C interface is enabled:
+  ```bash
+  sudo raspi-config
+  ```
+  Navigate to **Interface Options** > **I2C** and enable it.
+
+- If using an I2S microphone (e.g., ADAU7002), enable I2S by adding the following to `/boot/firmware/config.txt`:
+  ```txt
+  dtparam=i2s=on
+  dtoverlay=i2s-mmap
+  dtoverlay=adau7002-simple
+  ```
+  Then reboot the Raspberry Pi:
+  ```bash
+  sudo reboot
+  ```
+
+---
+
+### 6. File Structure
+
+Ensure your project directory is structured as follows:
 ```
-source ~/.virtualenvs/pimoroni/bin/activate
+enviroplus-python/
+├── examples/
+│   ├── main.py
+│   ├── start_main.sh
+│   ├── air_conditions.json
+├── myenv/  # Virtual environment
 ```
 
-**Note** Raspbian/Raspberry Pi OS Lite users may first need to install git: `sudo apt install git`
+---
 
-## Or... Install from PyPi and configure manually:
+### 7. Dependencies
 
-* `python3 -m venv --system-site-packages $HOME/.virtualenvs/pimoroni`
-* Run `python3 -m pip install enviroplus`
+The following Python packages are required:
+- `enviroplus`
+- `st7735`
+- `pillow`
+- `ltr559`
 
-And install additional dependencies:
-
+Install them using:
 ```bash
-sudo apt install python3-numpy python3-smbus python3-pil python3-setuptools
+pip install enviroplus st7735 pillow ltr559
 ```
 
-**Note** this will not perform any of the required configuration changes on your Pi, you may additionally need to:
+---
 
-* Enable i2c: `raspi-config nonint do_i2c 0`
-* Enable SPI: `raspi-config nonint do_spi 0`
+### 8. License
 
-And if you're using a PMS5003 sensor you will need to:
+This project is licensed under the MIT License.
 
-### Bookworm
-
-* Enable serial: `raspi-config nonint do_serial_hw 0`
-* Disable serial terminal: `raspi-config nonint do_serial_cons 1`
-* Add `dtoverlay=pi3-miniuart-bt` to your `/boot/firmware/config.txt`
-
-### Bullseye
-
-* Enable serial: `raspi-config nonint set_config_var enable_uart 1 /boot/config.txt`
-* Disable serial terminal: `sudo raspi-config nonint do_serial 1`
-* Add `dtoverlay=pi3-miniuart-bt` to your `/boot/config.txt`
-
-## Alternate Software & User Projects
-
-* Enviro Plus Dashboard - https://gitlab.com/dedSyn4ps3/enviroplus-dashboard - A React-based web dashboard for viewing sensor data
-* Enviro+ Example Projects - https://gitlab.com/dedSyn4ps3/enviroplus-python-projects - Includes original examples plus code to stream to Adafruit IO (more projects coming soon)
-* enviro monitor - https://github.com/roscoe81/enviro-monitor
-* mqtt-all - https://github.com/robmarkcole/rpi-enviro-mqtt - now upstream: [see examples/mqtt-all.py](examples/mqtt-all.py)
-* enviroplus_exporter - https://github.com/tijmenvandenbrink/enviroplus_exporter - Prometheus exporter (with added support for Luftdaten and InfluxDB Cloud)
-* homekit-enviroplus - https://github.com/sighmon/homekit-enviroplus - An Apple HomeKit accessory for the Pimoroni Enviro+
-* go-enviroplus - https://github.com/rubiojr/go-enviroplus - Go modules to read Enviro+ sensors
-* homebridge-enviroplus - https://github.com/mhawkshaw/homebridge-enviroplus - a Homebridge plugin to add the Enviro+ to HomeKit via Homebridge
-* Enviro Plus Web - https://gitlab.com/idotj/enviroplusweb - Simple Flask application serves a web page with the current sensor readings and a graph over a specified time period
-
-## Help & Support
-
-* GPIO Pinout - https://pinout.xyz/pinout/enviro_plus
-* Support forums - https://forums.pimoroni.com/c/support
-* Discord - https://discord.gg/hr93ByC
