@@ -73,7 +73,7 @@ uint8_t NotifyCharData[512];
 uint16_t Connection_Handle;
 /* USER CODE BEGIN PV */
 uint32_t timestamp = 12345;
-uint8_t  pill_1    = 4;
+uint8_t  pill_1[14]    = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 //extern volatile uint8_t raw;
 /* USER CODE END PV */
 
@@ -97,18 +97,6 @@ void Custom_STM_App_Notification(Custom_STM_App_Notification_evt_t *pNotificatio
     /* USER CODE END CUSTOM_STM_App_Notification_Custom_Evt_Opcode */
 
     /* PILL_STATUS */
-    case CUSTOM_STM_TIME_STAMP_READ_EVT:
-      /* USER CODE BEGIN CUSTOM_STM_TIME_STAMP_READ_EVT */
-
-      /* USER CODE END CUSTOM_STM_TIME_STAMP_READ_EVT */
-      break;
-
-    case CUSTOM_STM_TIME_STAMP_WRITE_EVT:
-      /* USER CODE BEGIN CUSTOM_STM_TIME_STAMP_WRITE_EVT */
-
-      /* USER CODE END CUSTOM_STM_TIME_STAMP_WRITE_EVT */
-      break;
-
     case CUSTOM_STM_PILL_1_READ_EVT:
       /* USER CODE BEGIN CUSTOM_STM_PILL_1_READ_EVT */
 
@@ -179,7 +167,6 @@ void Custom_APP_Notification(Custom_App_ConnHandle_Not_evt_t *pNotification)
 void Custom_APP_Init(void)
 {
   /* USER CODE BEGIN CUSTOM_APP_Init */
-	 Custom_STM_App_Update_Char(CUSTOM_STM_TIME_STAMP, (uint8_t*)&timestamp);
 	 Custom_STM_App_Update_Char(CUSTOM_STM_PILL_1, (uint8_t*)&pill_1);
   /* USER CODE END CUSTOM_APP_Init */
   return;

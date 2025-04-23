@@ -35,15 +35,11 @@ extern "C" {
 typedef enum
 {
   /* PILL_STATUS */
-  CUSTOM_STM_TIME_STAMP,
   CUSTOM_STM_PILL_1,
 } Custom_STM_Char_Opcode_t;
 
 typedef enum
 {
-  /* time_stamp */
-  CUSTOM_STM_TIME_STAMP_READ_EVT,
-  CUSTOM_STM_TIME_STAMP_WRITE_EVT,
   /* PILL_1 */
   CUSTOM_STM_PILL_1_READ_EVT,
   CUSTOM_STM_PILL_1_WRITE_EVT,
@@ -72,7 +68,6 @@ typedef struct
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
-extern uint16_t SizeTime_Stamp;
 extern uint16_t SizePill_1;
 
 /* USER CODE BEGIN EC */
