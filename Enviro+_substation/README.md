@@ -1,6 +1,6 @@
 # Enviro+ Python Example
 
-This project demonstrates how to use the Enviro+ breakout board with a Raspberry Pi Zero to display and log environmental data, including temperature, pressure, humidity, light, gas levels, and noise.
+This project demonstrates how to use the Enviro+ breakout board with a Raspberry Pi Zero to display and log environmental data, including temperature, pressure, humidity, light, gas levels, and noise. The data for light, noise, humidity, temp, and the timestamp when it is collected is sent to the base station (Raspberry Pi 5) via MQTT over Wi-Fi. The user can hover their finger over te proximity sensor to switch screens to display temperature, pressure, humidity, light, oxidised gas, reduced gas, nh3, and noise vaules and graphs.
 
 I started with the code from Pimoroni. These are my sources:
 - https://github.com/pimoroni/enviroplus-python/tree/main
@@ -200,3 +200,14 @@ pip install enviroplus st7735 pillow ltr559
 
 This project is licensed under the MIT License.
 
+## Hardware
+
+The Enviro+ press fits into the Raspberry Pi Pico 2w. We powered it using a rechargeable microUSB battery pack.
+
+![circuit digram](images/air_conditions_circuit_diagram.drawio.png)
+
+We 3D printed a casing for it and this is the final design:
+
+![ open case](images/open_enviro+.JPG) ![closed case](images/closed+enviro+.JPG)
+
+You can find the stl files to print in the *CASE_3D_Print folder*.
